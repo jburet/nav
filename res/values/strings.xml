@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="hello">Hello World, NavActivity!</string>
+	<string name="app_name">nav</string>
+	<string name="debug_activity_title">Debug</string>
+	<string name="map_activity_title">Map</string>
+
+	<!-- Main menu item -->
+	<string name="menu_item_debug">Debug</string>
+	<string name="menu_item_map">Map</string>
+
+	<!-- Debug screen -->
+	<string name="debug_title">Console</string>
+	<string name="debug_gps_state">GPS : </string>
+	<string name="debug_gps_state_started">RUNNING</string>
+	<string name="debug_gps_state_stopped">STOPED</string>
+	<string name="debug_gps_time_before_fix">Estimated time before fix : </string>
+	<string name="debug_gps_up">Satellite used : </string>
+	<string name="debug_latitude">Lat : </string>
+	<string name="debug_longitude">Long : </string>
+	<string name="debug_speed">Speed : </string>
+	<string name="debug_bearing">Bearing : </string>
+	
+	<!-- Navbox -->
+	<string name="navbox_grd_speed">Grd Speed</string>
+	<string name="navbox_gps_alt">GPS Alt</string>
+	<string name="navbox_destination">Goto</string>
+	
+	<!-- ####### Map screen ####### -->
+	<!-- Context menu -->
+	<string name="map_cm_title">Navigation</string>
+	<string name="map_cm_goto">Go to</string>
+	
+	<string name="choose_destination_title">Choose a waypoint</string>
+	
+</resources>

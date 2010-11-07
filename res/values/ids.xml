@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <item type="id" name="navbox_ground_speed" />
+  <item type="id" name="navbox_gps_alt" />
+  <item type="id" name="navbox_destination" />
+  
+  <!-- Choose destination -->
+</resources>

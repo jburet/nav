@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<!-- GPS status -->
+	<TableRow>
+		<TextView android:layout_width="wrap_content" android:text="@string/debug_gps_state" />
+		<TextView android:id="@+id/debug_gps_state_value" />
+	</TableRow>
+	<TableRow>
+		<TextView android:layout_width="wrap_content" android:text="@string/debug_gps_time_before_fix" />
+		<TextView android:id="@+id/debug_gps_time_before_fix_value" />
+	</TableRow>
+	<TableRow>
+		<TextView android:layout_width="wrap_content" android:text="@string/debug_gps_up" />
+		<TextView android:id="@+id/debug_gps_up_value" />
+	</TableRow>
+	<!-- Position -->
+	<TableRow>
+		<TextView android:layout_width="wrap_content" android:text="@string/debug_latitude" />
+		<TextView android:id="@+id/debug_latitude_value" />
+	</TableRow>
+	<TableRow>
+		<TextView android:layout_width="wrap_content" android:text="@string/debug_longitude" />
+		<TextView android:id="@+id/debug_longitude_value" />
+	</TableRow>
+
+	<!-- Calculated speed -->
+	<TableRow>
+		<TextView android:layout_width="wrap_content" android:text="@string/debug_speed" />
+		<TextView android:id="@+id/debug_speed_value" />
+	</TableRow>
+	<!-- Calculated bearing -->
+	<TableRow>
+		<TextView android:layout_width="wrap_content" android:text="@string/debug_bearing" />
+		<TextView android:id="@+id/debug_bearing_value" />
+	</TableRow>
+</TableLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:navbox="http://schemas.android.com/apk/res/fr.jburet.nav"
+	android:orientation="vertical" android:layout_width="fill_parent" android:gravity="bottom"
+	android:layout_height="fill_parent">
+
+	<fr.jburet.nav.map.component.MapView
+		android:id="@+id/map" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" />
+
+</LinearLayout>
