@@ -26,6 +26,7 @@ import fr.jburet.nav.NavApplication;
 import fr.jburet.nav.NavConstant;
 import fr.jburet.nav.R;
 import fr.jburet.nav.database.DatabaseHelper;
+import fr.jburet.nav.database.airspace.AirspaceQuery;
 import fr.jburet.nav.database.point.Waypoint;
 import fr.jburet.nav.database.point.WaypointQuery;
 import fr.jburet.nav.database.point.WaypointQueryImpl;
@@ -60,11 +61,14 @@ public class MapActivity extends MainActivity {
 	private MapView mapview;
 
 	private WaypointQuery waypointQuery;
+	
+	private AirspaceQuery airspaceQuery;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		waypointQuery = ((NavApplication) getApplication()).getWaypointQuery();
+		airspaceQuery = ((NavApplication) getApplication()).getAirspaceQuery();
 		viewGroup = new RelativeLayout(this);
 		viewGroup.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		setContentView(viewGroup);
@@ -258,5 +262,6 @@ public class MapActivity extends MainActivity {
 	public void onMapBoundChange(double mapLeftLongitude, double mapTopLatitude, double mapRightLongitude,
 			double mapBottomLatitude) {
 		mapview.setWaypointToDraw(waypointQuery.listAll());
+		mapview.setAirspaceToDraw(airspaceQuery.listAll());
 	}
 }

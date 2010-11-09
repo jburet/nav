@@ -9,6 +9,6 @@ public class ConversionUtils {
 	}
 	
 	public static double distanceToLongitude(double distance, double latitude){
-		return distance / (Math.cos(latitude) * DEGREE_TO_DISTANCE);
+		return distance / (Math.cos(latitude/180*Math.PI) * DEGREE_TO_DISTANCE);
 	}
 }

@@ -36,11 +36,11 @@ public class WaypointDrawer {
 			// - A circle for all waypoint
 			// - A specific more large bitmap for waypoint
 			if (mapView.scaleX > 50) {
-				canvas.drawCircle(mapView.convertLatitudeToPixel(dest.getLongitude()),
-						mapView.convertLongitudeToPixel(dest.getLatitude()), 3, waypointPaint);
+				canvas.drawCircle(mapView.convertLongitudeToPixel(dest.getLongitude()),
+						mapView.convertLatitudeToPixel(dest.getLatitude()), 3, waypointPaint);
 			} else {
-				canvas.drawCircle(mapView.convertLatitudeToPixel(dest.getLongitude()),
-						mapView.convertLongitudeToPixel(dest.getLatitude()), 6, waypointPaint);
+				canvas.drawCircle(mapView.convertLongitudeToPixel(dest.getLongitude()),
+						mapView.convertLatitudeToPixel(dest.getLatitude()), 6, waypointPaint);
 			}
 		}
 		canvas.restore();

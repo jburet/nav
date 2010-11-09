@@ -3,6 +3,7 @@ package fr.jburet.nav.map.component;
 import java.util.Collection;
 
 import fr.jburet.nav.R;
+import fr.jburet.nav.database.airspace.Airspace;
 import fr.jburet.nav.database.point.Waypoint;
 import fr.jburet.nav.gps.PositionData;
 import fr.jburet.nav.map.MapActivity;
@@ -23,12 +24,15 @@ import android.view.SurfaceView;
 
 public class MapView extends SurfaceView implements SurfaceHolder.Callback {
 
+	private static final float NAUTIQUE_MILE_TO_KM = 1.852f;
+
 	/** Map activity controller */
 	/** Handle to the application context, used to e.g. fetch Drawables. */
 	private MapActivity mContext;
 
 	// Drawer
 	private WaypointDrawer waypointDrawer = new WaypointDrawer(mContext, this);
+	private AirspaceDrawer airspaceDrawer = new AirspaceDrawer(mContext, this);
 
 	/**
 	 * Current height of the surface/canvas.
@@ -69,6 +73,8 @@ public class MapView extends SurfaceView implements SurfaceHolder.Callback {
 
 	// Waypoint to draw
 	private Collection<Waypoint> waypoints = null;
+
+	private Collection<Airspace> airspaces = null;
 
 	class MapThread extends Thread {
 
@@ -228,6 +234,7 @@ public class MapView extends SurfaceView implements SurfaceHolder.Callback {
 				cleanMap(c);
 				drawMap(c);
 				drawPlaneIcon(c);
+				drawAirspace(c);
 			}
 		}
 
@@ -245,6 +252,12 @@ public class MapView extends SurfaceView implements SurfaceHolder.Callback {
 		private void drawWaypoint(Canvas c) {
 			if (waypoints != null) {
 				waypointDrawer.drawWaypoint(c, waypoints);
+			}
+		}
+
+		private void drawAirspace(Canvas c) {
+			if (airspaces != null) {
+				airspaceDrawer.drawAirspace(c, airspaces);
 			}
 		}
 
@@ -323,12 +336,20 @@ public class MapView extends SurfaceView implements SurfaceHolder.Callback {
 		this.waypoints = waypoints;
 	}
 
-	float convertLatitudeToPixel(float latitude) {
-		return (float) ((((double) latitude - mapLeftLongitude) / (mapRightLongitude - mapLeftLongitude)) * mCanvasWidth);
+	public void setAirspaceToDraw(Collection<Airspace> airspaces) {
+		this.airspaces = airspaces;
 	}
 
 	float convertLongitudeToPixel(float longitude) {
-		return (float) ((((double) longitude - mapTopLatitude) / (mapBottomLatitude - mapTopLatitude)) * mCanvasHeight);
+		return (float) ((((double) longitude - mapLeftLongitude) / (mapRightLongitude - mapLeftLongitude)) * mCanvasWidth);
+	}
+
+	float convertLatitudeToPixel(float latitude) {
+		return (float) ((((double) mapTopLatitude - latitude) / (mapTopLatitude - mapBottomLatitude)) * mCanvasHeight);
+	}
+
+	public float convertNmToPixel(float nm) {
+		return nm * NAUTIQUE_MILE_TO_KM * mCanvasWidth / scaleX;
 	}
 
 }
