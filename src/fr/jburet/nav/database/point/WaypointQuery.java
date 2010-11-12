@@ -6,7 +6,7 @@ import fr.jburet.nav.database.Query;
 
 public interface WaypointQuery extends Query<Waypoint> {
 
-	public List<Waypoint> listByDistance(float latitude, float longitude, float distance);
+	public List<Waypoint> listByCoord(float latitudeMin, float longitudeMin, float latitudeMax, float longitudeMax);
 
 	public Waypoint findByCode(String code);
 

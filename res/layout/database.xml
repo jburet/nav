@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<TableRow>
+		<TextView android:layout_width="wrap_content"
+			android:text="@string/database_import_waypoint_chooser" />
+	</TableRow>
+	<TableRow>
+		<EditText android:id="@+id/database_waypoint_file"
+			android:text="/sdcard/france.cup" />
+		<Button android:id="@+id/database_waypoint_import"
+			android:text="@string/database_import_button" android:clickable="true" />
+	</TableRow>
+	<TableRow>
+		<EditText android:id="@+id/database_airspace_file"
+			android:text="/sdcard/france.txt" />
+		<Button android:id="@+id/database_airspace_import"
+			android:text="@string/database_import_button" android:clickable="true" />
+	</TableRow>
+</TableLayout>

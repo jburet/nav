@@ -43,27 +43,38 @@ public class GpsService extends Service implements GpsBackgroundService, GpsStat
 	// Distance, bearing and speed calcul result
 	private float[] dbsResult = new float[5];
 
+	private boolean simulationMode = true;
+
 	@Override
 	public void onCreate() {
 		// Start mandatory services
 		// GPS listner
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		// Register gps status listener
-		locationManager.addGpsStatusListener(this);
-		// Register for location
-		Criteria gpsCriteria = new Criteria();
-		gpsCriteria.setAccuracy(Criteria.ACCURACY_FINE);
-		gpsCriteria.setAltitudeRequired(true);
-		gpsProvider = locationManager.getBestProvider(gpsCriteria, true);
+		if (simulationMode) {
+			GpsMock gpsMock = new GpsMock(this);
+			Thread thread = new Thread(gpsMock);
+			thread.start();
+		} else {
+			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+			// Register gps status listener
+			locationManager.addGpsStatusListener(this);
+			// Register for location
+			Criteria gpsCriteria = new Criteria();
+			gpsCriteria.setAccuracy(Criteria.ACCURACY_FINE);
+			gpsCriteria.setAltitudeRequired(true);
+			gpsProvider = locationManager.getBestProvider(gpsCriteria, true);
+			
+			// initial value
+			onGpsStatusChanged(GpsStatus.GPS_EVENT_SATELLITE_STATUS);
+		}
 		binder = new GpsServiceBinder(this, this);
-		// initial value
-		onGpsStatusChanged(GpsStatus.GPS_EVENT_SATELLITE_STATUS);
 
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		locationManager.requestLocationUpdates(gpsProvider, GPS_UPDATE_TIME, 0, this);
+		if (!simulationMode) {
+			locationManager.requestLocationUpdates(gpsProvider, GPS_UPDATE_TIME, 0, this);
+		}
 		return START_STICKY;
 	}
 
@@ -100,7 +111,8 @@ public class GpsService extends Service implements GpsBackgroundService, GpsStat
 
 	// LOCATION LISTENER IMPL //
 	public void onLocationChanged(Location location) {
-		PositionData positionData = calculPositionData(location);
+		PositionData positionData;
+		positionData = calculPositionData(location);
 		if (servicesListener != null) {
 			for (GpsServiceListener gpsServiceListener : servicesListener) {
 				gpsServiceListener.positionChanged(positionData);

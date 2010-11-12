@@ -1,5 +1,7 @@
 package fr.jburet.nav;
 
+import fr.jburet.nav.component.FileChooser;
+import fr.jburet.nav.database.DatabaseActivity;
 import fr.jburet.nav.map.MapActivity;
 import android.app.Activity;
 import android.content.Intent;
@@ -31,6 +33,10 @@ public abstract class MainActivity extends Activity {
 		case R.id.main_menu_map:
 			startActivity(new Intent(this, MapActivity.class));
 			return true;
+		case R.id.main_menu_database:
+			startActivity(new Intent(this, DatabaseActivity.class));
+			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}

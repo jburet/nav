@@ -36,6 +36,7 @@ import fr.jburet.nav.gps.PositionData;
 import fr.jburet.nav.gps.binder.GpsServiceBinder;
 import fr.jburet.nav.gps.listener.GpsServiceListener;
 import fr.jburet.nav.map.component.MapView;
+import fr.jburet.nav.map.component.MapViewTouchListener;
 import fr.jburet.nav.map.component.NavBox;
 import fr.jburet.nav.navigation.ChooseDestinationActivity;
 import fr.jburet.nav.navigation.NavigationBackgroundService;
@@ -56,12 +57,14 @@ public class MapActivity extends MainActivity {
 
 	private RelativeLayout viewGroup;
 
-	private NavigationBackgroundService navigationService;
+	private NavigationBackgroundService navigationService = null;
+
+	private GpsBackgroundService gpsService = null;
 
 	private MapView mapview;
 
 	private WaypointQuery waypointQuery;
-	
+
 	private AirspaceQuery airspaceQuery;
 
 	@Override
@@ -75,10 +78,21 @@ public class MapActivity extends MainActivity {
 		mapview = new MapView(this, null);
 		viewGroup.addView(mapview, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		updateNavbox();
-		bindGpsPositionListener();
-		bindNavigationListener();
-		// Context menu register
-		registerForContextMenu(mapview);
+		if (gpsService == null) {
+			bindGpsPositionListener();
+		}
+		if (navigationService == null) {
+			bindNavigationListener();
+		}
+
+		// Set touchlistener
+		mapview.setOnTouchListener(new MapViewTouchListener(this));
+
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 
 	@Override
@@ -213,14 +227,16 @@ public class MapActivity extends MainActivity {
 		Intent intent = new Intent(this, GpsService.class);
 
 		ServiceConnection connection = new ServiceConnection() {
+
 			public void onServiceConnected(ComponentName name, IBinder service) {
 				Log.i("DebugActivity", "Connected to GPS service!");
-				GpsBackgroundService gpsService = ((GpsServiceBinder) service).getService();
+				gpsService = ((GpsServiceBinder) service).getService();
 				gpsService.addListener(listener);
 			}
 
 			public void onServiceDisconnected(ComponentName name) {
 				Log.i("DebugActivity", "Disconnected from GPS service!");
+				gpsService.removeListener(listener);
 			}
 
 		};
@@ -252,6 +268,7 @@ public class MapActivity extends MainActivity {
 
 			public void onServiceDisconnected(ComponentName name) {
 				Log.i("MapActivity", "Disconnected from Navigation service!");
+				navigationService.removeListener(listener);
 			}
 
 		};
@@ -259,9 +276,11 @@ public class MapActivity extends MainActivity {
 		bindService(intent, connection, Context.BIND_AUTO_CREATE);
 	}
 
-	public void onMapBoundChange(double mapLeftLongitude, double mapTopLatitude, double mapRightLongitude,
-			double mapBottomLatitude) {
-		mapview.setWaypointToDraw(waypointQuery.listAll());
-		mapview.setAirspaceToDraw(airspaceQuery.listAll());
+	public void onMapBoundChange(float mapLeftLongitude, float mapTopLatitude, float mapRightLongitude,
+			float mapBottomLatitude) {
+		mapview.setWaypointToDraw(waypointQuery.listByCoord(mapBottomLatitude, mapLeftLongitude, mapTopLatitude,
+				mapRightLongitude));
+		mapview.setAirspaceToDraw(airspaceQuery.listAirspaceInPolygon(mapTopLatitude, mapLeftLongitude,
+				mapBottomLatitude, mapRightLongitude));
 	}
 }

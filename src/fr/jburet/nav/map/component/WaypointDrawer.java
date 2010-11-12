@@ -18,6 +18,7 @@ public class WaypointDrawer {
 
 	/** Paint */
 	private Paint waypointPaint;
+	private Paint textPaint;
 
 	public WaypointDrawer(Context context, MapView mapView) {
 		this.context = context;
@@ -26,6 +27,10 @@ public class WaypointDrawer {
 		waypointPaint = new Paint();
 		waypointPaint.setColor(Color.BLUE);
 		waypointPaint.setStyle(Style.FILL_AND_STROKE);
+
+		textPaint = new Paint();
+		textPaint.setColor(Color.BLACK);
+		textPaint.setStyle(Style.FILL_AND_STROKE);
 	}
 
 	public void drawWaypoint(Canvas canvas, Collection<Waypoint> waypoints) {
@@ -35,12 +40,14 @@ public class WaypointDrawer {
 			// See the zoom for choosing :
 			// - A circle for all waypoint
 			// - A specific more large bitmap for waypoint
-			if (mapView.scaleX > 50) {
+			if (mapView.scaleX > 150) {
 				canvas.drawCircle(mapView.convertLongitudeToPixel(dest.getLongitude()),
 						mapView.convertLatitudeToPixel(dest.getLatitude()), 3, waypointPaint);
 			} else {
 				canvas.drawCircle(mapView.convertLongitudeToPixel(dest.getLongitude()),
 						mapView.convertLatitudeToPixel(dest.getLatitude()), 6, waypointPaint);
+				canvas.drawText(dest.getName(), mapView.convertLongitudeToPixel(dest.getLongitude()) + 7,
+						mapView.convertLatitudeToPixel(dest.getLatitude()) + 5, textPaint);
 			}
 		}
 		canvas.restore();

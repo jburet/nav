@@ -32,7 +32,6 @@ public class NavApplication extends Application {
 
 	@Override
 	public void onTerminate() {
-		dbHelper.closeDb();
 	}
 
 }

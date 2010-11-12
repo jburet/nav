@@ -4,10 +4,12 @@
 	<string name="app_name">nav</string>
 	<string name="debug_activity_title">Debug</string>
 	<string name="map_activity_title">Map</string>
+	<string name="database_activity_title">Waypoint And Airspace</string>
 
 	<!-- Main menu item -->
 	<string name="menu_item_debug">Debug</string>
 	<string name="menu_item_map">Map</string>
+	<string name="menu_item_database">Waypoint And Airpsace</string>
 
 	<!-- Debug screen -->
 	<string name="debug_title">Console</string>
@@ -20,17 +22,26 @@
 	<string name="debug_longitude">Long : </string>
 	<string name="debug_speed">Speed : </string>
 	<string name="debug_bearing">Bearing : </string>
-	
+
 	<!-- Navbox -->
 	<string name="navbox_grd_speed">Grd Speed</string>
 	<string name="navbox_gps_alt">GPS Alt</string>
 	<string name="navbox_destination">Goto</string>
-	
+
 	<!-- ####### Map screen ####### -->
 	<!-- Context menu -->
 	<string name="map_cm_title">Navigation</string>
 	<string name="map_cm_goto">Go to</string>
-	
+
 	<string name="choose_destination_title">Choose a waypoint</string>
-	
+
+	<!-- Database -->
+	<string name="database_import_waypoint_chooser">Waypoint file to import : </string>
+	<string name="database_import_button">Import</string>
+
+	<!-- File chooser component -->
+	<string name="no_files_error">No file</string>
+	<string name="directory_error">No file</string>
+	<string name="sdcard_error">No file</string>
+
 </resources>

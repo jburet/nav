@@ -22,9 +22,13 @@ public class Airspace {
 	private String description;
 	private String frequency;
 	private String classe;
-	private int altitudeBottom;
-	private int altitudeTop;
-	private String shape;
+	private String altitudeBottom;
+	private String altitudeTop;
+	private String shape = "";
+	private float minLatitude;
+	private float maxLatitude;
+	private float minLongitude;
+	private float maxLongitude;
 
 	public int getId() {
 		return id;
@@ -82,20 +86,56 @@ public class Airspace {
 		this.shape = shape;
 	}
 
-	public int getAltitudeBottom() {
+	public void addShape(String line) {
+		shape = shape + line + ";";
+	}
+
+	public String getAltitudeBottom() {
 		return altitudeBottom;
 	}
 
-	public void setAltitudeBottom(int altitudeBottom) {
+	public void setAltitudeBottom(String altitudeBottom) {
 		this.altitudeBottom = altitudeBottom;
 	}
 
-	public int getAltitudeTop() {
+	public String getAltitudeTop() {
 		return altitudeTop;
 	}
 
-	public void setAltitudeTop(int altitudeTop) {
+	public void setAltitudeTop(String altitudeTop) {
 		this.altitudeTop = altitudeTop;
+	}
+
+	public float getMinLatitude() {
+		return minLatitude;
+	}
+
+	public void setMinLatitude(float minLatitude) {
+		this.minLatitude = minLatitude;
+	}
+
+	public float getMaxLatitude() {
+		return maxLatitude;
+	}
+
+	public void setMaxLatitude(float maxLatitude) {
+		this.maxLatitude = maxLatitude;
+	}
+
+	public float getMinLongitude() {
+		return minLongitude;
+	}
+
+	public void setMinLongitude(float minLongitude) {
+		this.minLongitude = minLongitude;
+	}
+
+	public float getMaxLongitude() {
+		return maxLongitude;
+	}
+
+	public void setMaxLongitude(float maxLongitude) {
+		this.maxLongitude = maxLongitude;
 	}
 
 }

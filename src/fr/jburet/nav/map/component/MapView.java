@@ -57,19 +57,19 @@ public class MapView extends SurfaceView implements SurfaceHolder.Callback {
 	private double currentLongitude = -1;
 
 	/** Current map bearing and size */
-	private double mapBearing;
+	private float mapBearing;
 
-	private double mapTopLatitude;
+	private float mapTopLatitude;
 
-	private double mapLeftLongitude;
+	private float mapLeftLongitude;
 
-	private double mapBottomLatitude;
+	private float mapBottomLatitude;
 
-	private double mapRightLongitude;
+	private float mapRightLongitude;
 
-	int scaleX = 50;
+	float scaleX = 50;
 
-	int scaleY;
+	float scaleY;
 
 	// Waypoint to draw
 	private Collection<Waypoint> waypoints = null;
@@ -131,23 +131,18 @@ public class MapView extends SurfaceView implements SurfaceHolder.Callback {
 			if (currentLatitude >= 0 && currentLongitude >= 0) {
 				// Nb de deg ˆ gauche
 				// TODO Take in care 180¡ limit...
-				mapLeftLongitude = currentLongitude
+				mapLeftLongitude = (float) (currentLongitude
 						- ConversionUtils.distanceToLongitude(
-								((double) mPlaneIconX / (double) mCanvasWidth * (double) scaleX), currentLatitude);
-				mapRightLongitude = currentLongitude
+								((double) mPlaneIconX / (double) mCanvasWidth * (double) scaleX), currentLatitude));
+				mapRightLongitude = (float) (currentLongitude
 						+ ConversionUtils.distanceToLongitude((((double) mCanvasWidth - (double) mPlaneIconX)
-								/ (double) mCanvasWidth * (double) scaleX), currentLatitude);
+								/ (double) mCanvasWidth * (double) scaleX), currentLatitude));
 				// TODO Take in care sud hemisphere
-				mapTopLatitude = currentLatitude
+				mapTopLatitude = (float) (currentLatitude
 						+ ConversionUtils.distanceToLatitude((double) mPlaneIconY / (double) mCanvasHeight
-								* (double) scaleY);
-				mapBottomLatitude = currentLatitude
-						- ConversionUtils.distanceToLatitude((((double) mCanvasHeight - (double) mPlaneIconY)
-								/ (double) mCanvasHeight * (double) scaleY));
-				Log.d("MapView", "left = " + mapLeftLongitude);
-				Log.d("MapView", "right = " + mapRightLongitude);
-				Log.d("MapView", "top = " + mapTopLatitude);
-				Log.d("MapView", "bottom = " + mapBottomLatitude);
+								* (double) scaleY));
+				mapBottomLatitude = (float) (currentLatitude - ConversionUtils
+						.distanceToLatitude((((double) mCanvasHeight - (double) mPlaneIconY) / (double) mCanvasHeight * (double) scaleY)));
 				mapInitialized = true;
 				mContext.onMapBoundChange(mapLeftLongitude, mapTopLatitude, mapRightLongitude, mapBottomLatitude);
 			}
@@ -221,7 +216,7 @@ public class MapView extends SurfaceView implements SurfaceHolder.Callback {
 					}
 					try {
 						// Refresh 2 seconds
-						Thread.sleep(1000);
+						Thread.sleep(10);
 					} catch (InterruptedException e) {
 						// Do nothing
 					}
@@ -231,6 +226,7 @@ public class MapView extends SurfaceView implements SurfaceHolder.Callback {
 
 		private void doDraw(Canvas c) {
 			if (mapInitialized) {
+				updateMapBound();
 				cleanMap(c);
 				drawMap(c);
 				drawPlaneIcon(c);
@@ -313,10 +309,10 @@ public class MapView extends SurfaceView implements SurfaceHolder.Callback {
 
 	// Public map view update
 
-	public void updateScale(int scaleX) {
+	public void updateScale(float scaleX) {
 		this.scaleX = scaleX;
 		// update scaleY with resolution
-		this.scaleY = (int) (scaleX / getScreenFactor());
+		this.scaleY = (float) (scaleX / getScreenFactor());
 	}
 
 	// Inernal method
